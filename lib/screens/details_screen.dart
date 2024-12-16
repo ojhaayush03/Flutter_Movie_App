@@ -1,6 +1,7 @@
 // lib/screens/details_screen.dart
 import 'package:flutter/material.dart';
 import '../models/movie.dart';
+import '../widgets/review_widget.dart'; // Import the review widget
 
 class DetailsScreen extends StatelessWidget {
   final Movie movie;
@@ -57,6 +58,22 @@ class DetailsScreen extends StatelessWidget {
                   Text(
                     movie.summary.replaceAll(RegExp(r'<[^>]*>'), ''),
                     style: const TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  // Add the ReviewWidget here
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ReviewWidget(
+                        movieId: movie.id.toString(), 
+                        movieTitle: movie.title,
+                      ),
+                    ),
                   ),
                 ],
               ),

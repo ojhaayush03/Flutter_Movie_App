@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077806977151",
+    "project_id": "movieview-b3e9b",
+    "storage_bucket": "movieview-b3e9b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077806977151:android:f9362e18ab5f1d15f1af4a",
+        "android_client_info": {
+          "package_name": "com.example.quadbtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkunzUpDFoePGou_QDQboEQUytLurSZgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

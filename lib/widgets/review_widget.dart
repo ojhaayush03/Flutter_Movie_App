@@ -30,45 +30,61 @@ class _ReviewWidgetState extends State<ReviewWidget> {
   }
 
   Future<void> _loadExistingReview() async {
+  try {
     final review = await _reviewService.getUserReviewForMovie(widget.movieId);
+    
     if (mounted) {
       setState(() {
         _existingReview = review;
+        
+        // If the review exists, populate the form
         if (review != null) {
           _rating = review.rating;
           _commentController.text = review.comment;
+        } else {
+          // If no review exists, reset the form or handle as needed
+          _rating = 0;  // Reset rating to default (0)
+          _commentController.clear();  // Clear the comment field
         }
       });
     }
+  } catch (e) {
+    // Handle error if something goes wrong
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to load review: $e')),
+    );
   }
+}
+
 
   void _submitReview() async {
-    if (_rating == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a rating')),
-      );
-      return;
-    }
-
-    try {
-      await _reviewService.addReview(
-        movieId: widget.movieId,
-        rating: _rating,
-        comment: _commentController.text.trim(),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Review submitted for ${widget.movieTitle}')),
-      );
-
-      // Reload existing review
-      await _loadExistingReview();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to submit review: $e')),
-      );
-    }
+  if (_rating == 0) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Please select a rating')),
+    );
+    return;
   }
+
+  try {
+    await _reviewService.addReview(
+      movieId: widget.movieId,
+      rating: _rating,
+      comment: _commentController.text.trim(),
+    );
+
+    setState(() {});  // Force UI refresh after submission
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Review submitted for ${widget.movieTitle}')),
+    );
+
+    await _loadExistingReview(); // Reload review after submission
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to submit review: $e')),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {

@@ -72,7 +72,7 @@ Widget build(BuildContext context) {
             mainAxisSize: MainAxisSize.min, 
             children: [
               Image.asset(
-                'assets/images/logo.png', 
+                'assets/images/pogo.png', 
                 width: 150, 
                 height: 75, 
                 fit: BoxFit.contain,
